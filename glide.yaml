@@ -4,21 +4,6 @@ import:
   version: v0.11.0
 - package: github.com/aporeto-inc/trireme
   subpackages:
-  - cmd/remoteenforcer
-  - cmd/systemdutil
-  - configurator
-  - constants
-  - enforcer
-  - example/common
-  - monitor
-  - monitor/cliextractor
-  - monitor/dockermonitor
-  - policy
-  - supervisor
-- package: github.com/docker/docker
-  version: v1.13.1-rc1
-  subpackages:
-  - api/types
-  - client
+  - utils/common
 - package: github.com/docopt/docopt-go
   version: 0.6.2

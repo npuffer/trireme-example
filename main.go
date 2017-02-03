@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/aporeto-inc/trireme/example/common"
+	"github.com/aporeto-inc/trireme/utils/common"
 	docopt "github.com/docopt/docopt-go"
 )
 
