@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	log "github.com/Sirupsen/logrus"
 	"github.com/aporeto-inc/trireme/utils/common"
 	docopt "github.com/docopt/docopt-go"
@@ -28,7 +26,9 @@ func main() {
       [--keyFile=<keyFile>]
       [--certFile=<certFile>]
       [--caCert=<caFile>]
+      [--log-level=<log-level>]
     trireme enforce
+      [--log-level=<log-level>]
     trireme <cgroup>
 
   Options:
@@ -47,13 +47,33 @@ func main() {
     --extractor                            External metadata extractor [default: ]
     --target-networks=<networks>...        The target networks that Trireme should apply authentication [default: 172.17.0.0/24]
 	<cgroup>                               cgroup of process.
+
+Logging Options:
+    --log-level=<log-level>                Log level [default: info].
   `
 
 	arguments, _ := docopt.Parse(usage, nil, true, "1.0.0rc2", false)
-	fmt.Println(arguments)
 
-	log.SetLevel(log.InfoLevel)
+	LogLevel := arguments["--log-level"].(string)
+	logLevel := log.InfoLevel
+	switch LogLevel {
+	case "trace":
+		logLevel = log.DebugLevel
+	case "debug":
+		logLevel = log.DebugLevel
+	case "info":
+		logLevel = log.InfoLevel
+	case "warn":
+		logLevel = log.WarnLevel
+	case "error":
+		logLevel = log.ErrorLevel
+	case "fatal":
+		logLevel = log.FatalLevel
+	default:
+		log.Fatal("Unknown log level.")
+	}
+	log.SetLevel(logLevel)
 	log.SetFormatter(&log.TextFormatter{})
 
-	common.ProcessArgs(arguments, nil)
+	common.ProcessArgs(arguments, nil, logLevel)
 }
