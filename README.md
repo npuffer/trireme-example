@@ -132,7 +132,7 @@ with different labels you will not able able to access the nginx container.
 
 # Understanding the simple example.
 
-Let's dive into the code. This simple example is almost fully defined in [common.go](common/common.go).
+Let's dive into the code. This simple example is almost fully defined in (https://github.com/aporeto-inc/trireme/blob/master/utils/common/common.go).
 Trireme can be launched with a PresharedKey for authentication (the default mode of this example), or can use a Public Key Infrastructure based on certificates
 In both those cases, the configurator package provides helpers that will instantiate Trireme with mostly default parameters.
 
