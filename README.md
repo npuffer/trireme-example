@@ -1,6 +1,6 @@
-# Trireme Standalone Implementation
+# Trireme Example
 
-This package provides a simple implementation of network isolation using the
+This repo provides a simple implementation of network isolation using the
 Trireme library in a standalone mode without any control plane. It implements
 the trireme policy interface with a simple static policy: Two containers can
 talk to each other if they have at least one label that matches.
@@ -18,7 +18,7 @@ docker run \
   --pid host \
   -t \
   -v /var/run:/var/run \
-aporeto/trireme-example
+aporeto/trireme-example daemon --hybrid
 
 ```
 
@@ -132,15 +132,16 @@ with different labels you will not able able to access the nginx container.
 
 # Understanding the simple example.
 
-Let's dive into the code. This simple example is almost fully defined in (https://github.com/aporeto-inc/trireme/blob/master/utils/common/common.go).
 Trireme can be launched with a PresharedKey for authentication (the default mode of this example), or can use a Public Key Infrastructure based on certificates
-In both those cases, the configurator package provides helpers that will instantiate Trireme with mostly default parameters.
+In both those cases, the constructors package provides helpers that will instantiate Trireme with mostly default parameters. You can
+launch Trireme with PKI by simply running with the --usePKI option after you generate the right certificates. An example of
+self-signed certificates is provided in the certs directory.
 
 ## Trireme with PSK.
 
 To instantiate Trireme, the following Helper is used:
 ```go
-configurator.NewPSKTriremeWithDockerMonitor(serverID, networks, resolver, processor, eventCollector, syncAtStart, key)
+constructors.NewPSKTriremeWithDockerMonitor(serverID, networks, resolver, processor, eventCollector, syncAtStart, key)
 ```
 The parameters are the following:
 * `serverID` is a unique reference/name for the node where the instance of Trireme is running.
@@ -160,7 +161,7 @@ For more complex use cases, Trireme can be used with a Private Key Infrastructur
 The configurator helper is similar to the PresharedKey one, except that it takes into input the PKI information:
 
 ```go
-configurator.NewPKITriremeWithDockerMonitor(serverID, networks, resolver, processor, eventCollector, syncAtStart, keyPEM, certPEM, caCertPEM)
+constructors.NewPKITriremeWithDockerMonitor(serverID, networks, resolver, processor, eventCollector, syncAtStart, keyPEM, certPEM, caCertPEM)
 ```
 
 * `KeyPEM` is the Private Key in the PEM format.

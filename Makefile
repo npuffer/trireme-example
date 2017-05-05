@@ -10,13 +10,14 @@ build:
 	CGO_ENABLED=1 go build -a -installsuffix cgo
 
 install: build
-	  sudo cp example $(BIN_PATH)/trireme
+	  sudo cp trireme-example $(BIN_PATH)/trireme-example
 
 package:
-	cp example docker/trireme
-	mv example trireme
+	cp trireme-example docker/trireme-example
 
-docker_build: build
+docker_build:
+	cp trireme-example docker/
+	cd docker
 	docker \
 		build \
 		-t $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) docker
@@ -28,5 +29,4 @@ docker_push: docker_build
 
 clean:
 	rm -rf vendor
-	rm -rf example
-	rm -rf docker/trireme
+	rm -rf docker/trireme-example 

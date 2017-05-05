@@ -3,7 +3,7 @@ sudo: required
 dist: trusty
 
 go:
- - 1.7.3
+ - 1.8.1
 
 addons:
    apt:
@@ -23,10 +23,9 @@ before_install:
   - gometalinter.v1 --install
 
 script:
-  - go get -v -t ./...
-  - gometalinter.v1 --disable-all --enable=vet --enable=vetshadow --enable=golint --enable=structcheck --enable=aligncheck --enable=deadcode --enable=ineffassign --enable=gotype --enable=goimports --enable=varcheck --enable=interfacer --enable=goconst --enable=gosimple --enable=staticcheck --enable=unused --enable=misspell --deadline=30s
-  - ./.test.sh
   - make build
+  - gometalinter.v1 --disable-all --enable=vet --enable=vetshadow --enable=golint --enable=structcheck --enable=aligncheck --enable=deadcode --enable=ineffassign --vendor --enable=goimports --enable=varcheck --enable=interfacer --enable=goconst --enable=gosimple --enable=staticcheck --enable=unused --enable=misspell --deadline=300s ./...
+
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

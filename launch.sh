@@ -2,6 +2,7 @@ docker run \
   --name "Trireme" \
   --privileged \
   --net host \
+  --pid host
   -t \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-aporeto/trireme-example
+  -v /var/run:/var/run \
+aporeto/trireme-example deamon --remote
