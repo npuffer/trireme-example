@@ -88,7 +88,7 @@ func processDaemonArgs(arguments map[string]interface{}, processor enforcer.Pack
 				zap.String("ca", caCertFile),
 				zap.String("ca", caCertKeyFile),
 			)
-			t, m = constructors.HybridTriremeWithCompactPKI(keyFile, certFile, caCertFile, caCertKeyFile, targetNetworks, &customExtractor, remote, KillContainerOnError)
+			t, m = constructors.TriremeWithCompactPKI(keyFile, certFile, caCertFile, caCertKeyFile, targetNetworks, &customExtractor, remote, KillContainerOnError)
 		} else {
 			zap.L().Info("Setting up trireme with PSK")
 			t, m = constructors.TriremeWithPSK(targetNetworks, &customExtractor, remote, KillContainerOnError)
@@ -105,7 +105,7 @@ func processDaemonArgs(arguments map[string]interface{}, processor enforcer.Pack
 				zap.String("ca", caCertFile),
 				zap.String("ca", caCertKeyFile),
 			)
-			t, m = constructors.HybridTriremeWithCompactPKI(keyFile, certFile, caCertFile, caCertKeyFile, targetNetworks, &customExtractor, true, KillContainerOnError)
+			t, m, rm = constructors.HybridTriremeWithCompactPKI(keyFile, certFile, caCertFile, caCertKeyFile, targetNetworks, &customExtractor, true, KillContainerOnError)
 		} else {
 			t, m, rm = constructors.HybridTriremeWithPSK(targetNetworks, &customExtractor, KillContainerOnError)
 			if rm == nil {

@@ -76,11 +76,11 @@ func HybridTriremeWithPSK(networks []string, extractor *dockermonitor.DockerMeta
 
 	pass := []byte("THIS IS A BAD PASSWORD")
 	// Use this if you want a pre-shared key implementation
-	return configurator.NewPSKHybridTriremeWithMonitor("Server1", policyEngine, ExternalProcessor, nil, false, pass, *extractor, killContainerError)
+	return configurator.NewPSKHybridTriremeWithMonitor("Server1", networks, policyEngine, ExternalProcessor, nil, false, pass, *extractor, killContainerError)
 }
 
 // HybridTriremeWithCompactPKI is a helper method to created a PKI implementation of Trireme
-func HybridTriremeWithCompactPKI(keyFile, certFile, caCertFile, caKeyFile string, networks []string, extractor *dockermonitor.DockerMetadataExtractor, remoteEnforcer bool, killContainerError bool) (trireme.Trireme, monitor.Monitor) {
+func HybridTriremeWithCompactPKI(keyFile, certFile, caCertFile, caKeyFile string, networks []string, extractor *dockermonitor.DockerMetadataExtractor, remoteEnforcer bool, killContainerError bool) (trireme.Trireme, monitor.Monitor, monitor.Monitor) {
 
 	// Load client cert
 	certPEM, err := ioutil.ReadFile(certFile)
@@ -117,7 +117,49 @@ func HybridTriremeWithCompactPKI(keyFile, certFile, caCertFile, caKeyFile string
 
 	policyEngine := policyexample.NewCustomPolicyResolver(networks)
 
-	return configurator.NewCompactPKIWithDocker("Server1", policyEngine, ExternalProcessor, nil, false, keyPEM, certPEM, caCertPEM, token, *extractor, remoteEnforcer, killContainerError)
+	return configurator.NewHybridCompactPKIWithDocker("Server1", networks, policyEngine, ExternalProcessor, nil, false, keyPEM, certPEM, caCertPEM, token, *extractor, remoteEnforcer, killContainerError)
+
+}
+
+// TriremeWithCompactPKI is a helper method to created a PKI implementation of Trireme
+func TriremeWithCompactPKI(keyFile, certFile, caCertFile, caKeyFile string, networks []string, extractor *dockermonitor.DockerMetadataExtractor, remoteEnforcer bool, killContainerError bool) (trireme.Trireme, monitor.Monitor) {
+
+	// Load client cert
+	certPEM, err := ioutil.ReadFile(certFile)
+	if err != nil {
+		zap.L().Fatal(err.Error())
+	}
+
+	// Load key
+	keyPEM, err := ioutil.ReadFile(keyFile)
+	if err != nil {
+		zap.L().Fatal(err.Error())
+	}
+
+	block, _ := pem.Decode(keyPEM)
+	if block == nil {
+		zap.L().Fatal("Failed to read key PEM")
+	}
+
+	// Load CA cert
+	caCertPEM, err := ioutil.ReadFile(caCertFile)
+	if err != nil {
+		zap.L().Fatal(err.Error())
+	}
+
+	caKeyPEM, err := ioutil.ReadFile(caKeyFile)
+	if err != nil {
+		zap.L().Fatal(err.Error())
+	}
+
+	token, err := createTxtToken(caKeyPEM, caCertPEM, certPEM)
+	if err != nil {
+		zap.L().Fatal(err.Error())
+	}
+
+	policyEngine := policyexample.NewCustomPolicyResolver(networks)
+
+	return configurator.NewCompactPKIWithDocker("Server1", networks, policyEngine, ExternalProcessor, nil, false, keyPEM, certPEM, caCertPEM, token, *extractor, remoteEnforcer, killContainerError)
 
 }
 
