@@ -29,7 +29,7 @@ func SwarmExtractor(info *types.ContainerJSON) (*policy.PURuntime, error) {
 
 		serviceID := info.Config.Labels["com.docker.swarm.service.id"]
 
-		service, _, err := cli.ServiceInspectWithRaw(context.Background(), serviceID)
+		service, _, err := cli.ServiceInspectWithRaw(context.Background(), serviceID, types.ServiceInspectOptions{})
 		if err != nil {
 			return nil, fmt.Errorf("Failed get swarm labels: %s", err)
 		}
@@ -38,12 +38,13 @@ func SwarmExtractor(info *types.ContainerJSON) (*policy.PURuntime, error) {
 	}
 
 	// Create the tags based on the docker labels
-	tags := policy.NewTagsMap(map[string]string{
-		"image": info.Config.Image,
-		"name":  info.Name,
-	})
+	tags := []string{
+		"image="+info.Config.Image,
+		"name="+info.Name,
+	}
+
 	for k, v := range dockerLabels {
-		tags.Add(k, v)
+		tags = append(tags, k+"="+v)
 	}
 
 	ipa := policy.NewIPMap(map[string]string{

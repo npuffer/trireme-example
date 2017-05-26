@@ -2,6 +2,7 @@ package policyexample
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/aporeto-inc/trireme"
 	"github.com/aporeto-inc/trireme/monitor"
@@ -90,7 +91,7 @@ func (p *CustomPolicyResolver) ResolvePolicy(context string, runtimeInfo policy.
 
 	excluded := []string{}
 
-	containerPolicyInfo := policy.NewPUPolicy(context, policy.Police, ingress, egress, nil, tagSelectors, identity, annotations, ipl, p.triremeNets, excluded, nil)
+	containerPolicyInfo := policy.NewPUPolicy("M"+context, policy.Police, ingress, egress, nil, tagSelectors, identity, annotations, ipl, p.triremeNets, excluded, nil)
 
 	return containerPolicyInfo, nil
 }
@@ -121,10 +122,15 @@ func (p *CustomPolicyResolver) createRules(runtimeInfo policy.RuntimeReader) *po
 	}
 
 	tags := runtimeInfo.Tags()
-	for key, value := range tags.Tags {
+	for _, t  := range tags  {
+		parts  := strings.SplitN(t, "=", 2)
+		if len(parts) != 2 {
+			continue
+		}
+
 		kv := policy.KeyValueOperator{
-			Key:      key,
-			Value:    []string{value},
+			Key:      parts[0],
+			Value:    []string{parts[1]},
 			Operator: policy.Equal,
 		}
 
