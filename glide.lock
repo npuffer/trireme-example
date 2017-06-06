@@ -1,5 +1,5 @@
 hash: 562edee31d18908433ac5966bbdb70de59c74f9eb692ea063974ea7b5c8a50ee
-updated: 2017-06-02T20:07:33.749349897-07:00
+updated: 2017-06-06T13:05:11.327459362-07:00
 imports:
 - name: github.com/aporeto-inc/trireme
   version: 4b8e9484300ff24b06373ecf8f005a4a72047a66
@@ -98,7 +98,7 @@ imports:
 - name: github.com/pkg/errors
   version: c605e284fe17294bda444b34710735b29d1a9d90
 - name: github.com/shirou/gopsutil
-  version: e30b7839cd6161b2fbef5f187377a345157abe04
+  version: 3dd8bd46d9a1ccbd37b3ba6e3dc1dc7d37ba8dc5
   subpackages:
   - cpu
   - host
@@ -109,7 +109,7 @@ imports:
 - name: github.com/shirou/w32
   version: bb4de0191aa41b5507caa14b0650cdbddcd9280b
 - name: github.com/Sirupsen/logrus
-  version: 5e5dc898656f695e2a086b8e12559febbfc01562
+  version: 33a34430d1c3dc71777fdd677864928e5b5812bc
 - name: github.com/StackExchange/wmi
   version: ea383cf3ba6ec950874b8486cd72356d007c768f
 - name: go.uber.org/atomic
@@ -124,7 +124,7 @@ imports:
   - internal/multierror
   - zapcore
 - name: golang.org/x/net
-  version: e4fa1c5465ad6111f206fc92186b8c83d64adbe1
+  version: 59a0b19b5533c7977ddeb86b017bf507ed407b12
   subpackages:
   - bpf
   - context
@@ -133,8 +133,6 @@ imports:
   - internal/socket
   - ipv4
   - proxy
-- name: golang.org/x/net/proxy
-  version: e4fa1c5465ad6111f206fc92186b8c83d64adbe1
 - name: golang.org/x/sys
   version: b90f89a1e7a9c1f6b918820b3daa7f08488c8594
   subpackages:
