@@ -1,5 +1,5 @@
 hash: 562edee31d18908433ac5966bbdb70de59c74f9eb692ea063974ea7b5c8a50ee
-updated: 2017-06-06T13:44:19.694227432-07:00
+updated: 2017-06-06T17:26:35.185343256-07:00
 imports:
 - name: github.com/aporeto-inc/trireme
   version: 4b8e9484300ff24b06373ecf8f005a4a72047a66
@@ -109,7 +109,7 @@ imports:
 - name: github.com/shirou/w32
   version: bb4de0191aa41b5507caa14b0650cdbddcd9280b
 - name: github.com/Sirupsen/logrus
-  version: 33a34430d1c3dc71777fdd677864928e5b5812bc
+  version: 68cec9f21fbf3ea8d8f98c044bc6ce05f17b267a
 - name: github.com/StackExchange/wmi
   version: ea383cf3ba6ec950874b8486cd72356d007c768f
 - name: go.uber.org/atomic
