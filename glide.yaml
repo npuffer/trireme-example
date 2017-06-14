@@ -1,7 +1,8 @@
 package: github.com/aporeto-inc/trireme-example
+description: ""
 import:
 - package: github.com/aporeto-inc/trireme
-  version: f735be9580ba460bdaa9e7b325aa8789078d055a
+  version: v1.0
   subpackages:
   - cmd/remoteenforcer
   - cmd/systemdutil
