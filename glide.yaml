@@ -1,8 +1,7 @@
 package: github.com/aporeto-inc/trireme-example
-description: ""
 import:
 - package: github.com/aporeto-inc/trireme
-  version: v1.0
+  version: f735be9580ba460bdaa9e7b325aa8789078d055a
   subpackages:
   - cmd/remoteenforcer
   - cmd/systemdutil
@@ -25,8 +24,3 @@ import:
   version: ^0.6.2
 - package: go.uber.org/zap
   version: ^1.3.0
-testImport:
-- package: github.com/smartystreets/goconvey
-  version: ^1.6.2
-  subpackages:
-  - convey
